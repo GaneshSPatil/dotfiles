@@ -31,7 +31,19 @@ set ls=2             " set two lines for info
 map <F7> :NERDTreeToggle<CR>
 map <F8> :FufBuffer<CR>
 map <F9> :FufFile<CR>
+map <F6> :w <CR> :!gcc main.c lib.c && ./a.out <CR>
+map <F5>:w <CR> :!node runTestForC.c libTest.c <CR>
+"map <F5> :w <CR> :!gcc -g % -o %< && ./%< <CR>
+
 map <M> ma
+
+function! CommentToggle()
+   execute ':silent! s/\([^ ]\)/\/\/ \1/'
+   execute ':silent! s/^\( *\)\/\/ \/\/ /\1/' 
+endfunction
+
+map <F1> :call CommentToggle()<CR>
+
 
 " Grep stuff
 map <C-G> :vimgrep /<C-R><C-W>/j *<CR>:cope<CR>
@@ -40,13 +52,15 @@ set expandtab
 map DS :%s/\s\+$// <CR>
 
 set softtabstop=2
+  au FileType c set makeprg=gcc\ % 
 set tabstop=2
 set shiftwidth=2
 set wrap!
 set number      " show line number
 set nohlsearch  " dont highlight search
 let g:templatePath = "/home/ben/.vim/templates"
-
+let g:user_emmet_mode='a'
+let user_emmet_expandabbr_key = '<c-e>'
 " Don't use Ex mode, use Q for formatting
 map Q gq
 
